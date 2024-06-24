@@ -30,7 +30,7 @@
             width: 100%;
             position: relative;
         }
-        .signin-btn {
+        .signin-iframe {
             position: absolute;
             top: 1em;
             right: 1em;
@@ -68,7 +68,7 @@
             const userInfo = document.querySelector('.user-info');
             userInfo.innerHTML = `Signed in as ${data.name}`;
             userInfo.style.display = 'block';
-            document.querySelector('.signin-btn').style.display = 'none';
+            document.querySelector('.signin-iframe').style.display = 'none';
             
             // Store the token in a cookie
             document.cookie = `token=${response.credential}; path=/`;
@@ -81,9 +81,7 @@
                 const userInfo = document.querySelector('.user-info');
                 userInfo.innerHTML = `Signed in as ${data.name}`;
                 userInfo.style.display = 'block';
-                document.querySelector('.signin-btn').style.display = 'none';
-            } else {
-                google.accounts.id.prompt();
+                document.querySelector('.signin-iframe').style.display = 'none';
             }
         }
 
@@ -92,10 +90,6 @@
                 client_id: '55152899043-t5k7cr0j61q4etebghnj2ci3k27sd82h.apps.googleusercontent.com',
                 callback: handleCredentialResponse
             });
-            google.accounts.id.renderButton(
-                document.querySelector('.signin-btn'),
-                { theme: 'outline', size: 'large' }
-            );
             checkForToken();
         };
     </script>
@@ -103,7 +97,9 @@
 </head>
 <body>
     <div class="container">
-        <div class="signin-btn"></div>
+        <div class="signin-iframe">
+            <iframe src="https://accounts.google.com/gsi/iframe/select?client_id=55152899043-t5k7cr0j61q4etebghnj2ci3k27sd82h.apps.googleusercontent.com&amp;auto_select=true&amp;ux_mode=popup&amp;ui_mode=card&amp;as=AeXfZDmSjHj9xTIVtjL6Uw&amp;channel_id=5492c7abf43a22c579d191f27d21e5edca82ec85790ca865fe57c91717b27e65&amp;origin=https%3A%2F%2Fluohoa97.github.io" title="Sign in with Google Dialog" style="height: 204px; width: 391px; overflow: hidden;"></iframe>
+        </div>
         <div class="user-info" style="display: none;"></div>
         <h1>Bloxular - Create games with ease</h1>
         <p>License agreement included with purchase</p>
