@@ -69,7 +69,24 @@
             userInfo.innerHTML = `Signed in as ${data.name}`;
             userInfo.style.display = 'block';
             document.querySelector('.signin-btn').style.display = 'none';
+            
+            // Store the token in a cookie
+            document.cookie = `token=${response.credential}; path=/`;
         }
+
+        function checkForToken() {
+            const token = document.cookie.split('; ').find(row => row.startsWith('token='));
+            if (token) {
+                const data = jwt_decode(token.split('=')[1]);
+                const userInfo = document.querySelector('.user-info');
+                userInfo.innerHTML = `Signed in as ${data.name}`;
+                userInfo.style.display = 'block';
+                document.querySelector('.signin-btn').style.display = 'none';
+            } else {
+                google.accounts.id.prompt();
+            }
+        }
+
         window.onload = function() {
             google.accounts.id.initialize({
                 client_id: '55152899043-t5k7cr0j61q4etebghnj2ci3k27sd82h.apps.googleusercontent.com',
@@ -79,7 +96,7 @@
                 document.querySelector('.signin-btn'),
                 { theme: 'outline', size: 'large' }
             );
-            google.accounts.id.prompt();
+            checkForToken();
         };
     </script>
     <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
@@ -108,7 +125,6 @@
         <a href="https://discord.com/channels/@me/1039999879893749821/">Discord (@luohoa97)</a>
         <a href="https://www.guilded.gg/u/evr_l" target="_blank">Guilded</a><br>
         <a href="https://www.twitter.com/evr_l_">Twitter</a><br>
-
         
         <a href="https://sites.google.com/view/bloxular">Visit our site</a>
 
