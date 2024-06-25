@@ -76,14 +76,14 @@
 
         function handleCredentialResponse(response) {
             const decodedCredential = parseJwt(response.credential);
-            const userInfo = document.getElementById('user-info');
+            const userInfo = document.body.getElementById('container').getElementById('user-info');
             userInfo.innerText = `Hypa!, ${decodedCredential.name}!`;
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="container">
         <div class="user-info" style="display: none;" id="user-info"></div>
         <h1>Bloxular - Create games with ease</h1>
         <p>License agreement included with purchase</p>
