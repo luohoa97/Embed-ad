@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:title" content="Bloxular - Create games with ease">
@@ -61,8 +62,6 @@
             margin-top: 1em;
         }
     </style>
-    <div id="user-info"></div>
-
     <script>
         window.onload = function() {
             google.accounts.id.initialize({
@@ -77,7 +76,7 @@
         function handleCredentialResponse(response) {
             const decodedCredential = parseJwt(response.credential);
             const userInfo = document.getElementById('user-info');
-            userInfo.innerText = `${decodedCredential.name}`;
+            userInfo.innerText = `Hello, ${decodedCredential.name}!`;
         }
 
         function parseJwt(token) {
@@ -89,9 +88,7 @@
 
             return JSON.parse(jsonPayload);
         }
-    </script>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script>
+        
         function handleCredentialResponse(response) {
             const data = jwt_decode(response.credential);
             const userInfo = document.querySelector('.user-info');
@@ -126,9 +123,6 @@
 </head>
 <body>
     <div class="container">
-        <div class="signin-iframe">
-            <iframe src="https://accounts.google.com/gsi/iframe/select?client_id=55152899043-t5k7cr0j61q4etebghnj2ci3k27sd82h.apps.googleusercontent.com&amp;auto_select=true&amp;ux_mode=popup&amp;ui_mode=card&amp;as=AeXfZDmSjHj9xTIVtjL6Uw&amp;channel_id=5492c7abf43a22c579d191f27d21e5edca82ec85790ca865fe57c91717b27e65&amp;origin=https://luohoa97.github.io" title="Sign in to Bloxular with Google" style="height: 204px; width: 391px; overflow: hidden;"></iframe>
-        </div>
         <div class="user-info" style="display: none;"></div>
         <h1>Bloxular - Create games with ease</h1>
         <p>License agreement included with purchase</p>
