@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google One Tap Sign-Up</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+    <div id="g_id_onload"
+         data-client_id="55152899043-t5k7cr0j61q4etebghnj2ci3k27sd82h.apps.googleusercontent.com"
+         data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin"
+         data-type="standard"></div>
+
+    <script>
+        window.onload = function() {
+            google.accounts.id.initialize({
+                client_id: '',
+                callback: handleCredentialResponse,
+            });
+            google.accounts.id.prompt();
+        };
+
+        function handleCredentialResponse(response) {
+            console.log("Encoded JWT ID token: " + response.credential);
+        }
+    </script>
+</body>
+</html>
