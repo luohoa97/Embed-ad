@@ -1,28 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Google One Tap Sign-Up</title>
+    <title>Google One Tap Sign-In</title>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
-    <div id="g_id_onload"
-         data-client_id="55152899043-t5k7cr0j61q4etebghnj2ci3k27sd82h.apps.googleusercontent.com"
-         data-auto_prompt="false">
-    </div>
-    <div class="g_id_signin"
-         data-type="standard"></div>
+    <div id="user-info"></div>
 
     <script>
         window.onload = function() {
             google.accounts.id.initialize({
-                client_id: '',
+                client_id: '55152899043-t5k7cr0j61q4etebghnj2ci3k27sd82h.apps.googleusercontent.com',
                 callback: handleCredentialResponse,
+                auto_select: true,
+                cancel_on_tap_outside: false
             });
             google.accounts.id.prompt();
         };
 
         function handleCredentialResponse(response) {
-            console.log("Encoded JWT ID token: " + response.credential);
+            const decodedCredential = parseJwt(response.credential);
+            const userInfo = document.getElementById('user-info');
+            userInfo.innerText = `Hello, ${decodedCredential.name}!`;
+        }
+
+        function parseJwt(token) {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            return JSON.parse(jsonPayload);
         }
     </script>
 </body>
